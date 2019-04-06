@@ -13,6 +13,8 @@ Mobile app using machine learning to help language learners correct their accent
 
 - Do we even need a postgres table for word -> path to model? Can't we just create a directory structure like `/models/{word}/model`?
 - Instead of training ML, we can use a diff of the audio and then compare the diffs? (Similar to how [Shazam](<https://en.wikipedia.org/wiki/Shazam_(application)>) [works](http://coding-geek.com/how-shazam-works/))
+- Prelim can be audio fingerprinting
+- Could use the Call API to record outside of the app
 
 ## How works
 
