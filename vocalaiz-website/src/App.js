@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     padding: 0,
     maxWidth: '5rem',
     borderRadius: '50%',
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
+    boxShadow: '4px 4px gray'
   },
   recordButtonImage: {
     maxWidth: '100%'
@@ -21,7 +22,7 @@ class App extends Component {
     return (
       <div className='App'>
         <Audio onStream={this._handleStream} onError={() => console.error('Error')} />
-        <button className={css(styles.recordButton)}>
+        <button className={css(styles.recordButton)} onClick={}>
           <img className={css(styles.recordButtonImage)} src={microphoneImage} alt='Record' />
         </button>
       </div>
