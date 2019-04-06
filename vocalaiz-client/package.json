@@ -21,5 +21,11 @@
     "babel-preset-expo": "^5.0.0",
     "jest-expo": "^32.0.0"
   },
-  "private": true
+  "private": true,
+  "semistandard": {
+    "parser": "babel-eslint"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  }
 }
