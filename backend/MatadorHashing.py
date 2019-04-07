@@ -8,7 +8,7 @@ def fingerprintComparator(word, audio):
          wordList = get_audio_file(word)
          fileWord = get_audio_file(word)[0]
      else:
-         break
+         return
 
      procWord = subprocess.Popen(['fpcalc', '-raw', fileWord],stdout=subprocess.PIPE)
      fileWordData = str(procWord.stdout.readlines()[1]).split('=')[1]
