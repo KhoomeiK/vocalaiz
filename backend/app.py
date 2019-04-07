@@ -14,7 +14,7 @@ def index():
 
 	# save as wav locally
 	testFile = wave.open('test.wav', 'wb')
-	testFile.setparams((2, 2, 8000, 100, None, None))
+	testFile.setparams((2, 2, 8000, 100, 'NONE', None))
 	testFile.writeframes(binBase)
 	# send to gcloud api
 	# splice wav into word files
