@@ -5,9 +5,7 @@ app = Flask(__name__)
 
 @app.route('/prelim', methods=['POST'])
 def index(word):
-	print(request)
-	print(request.files)
-	rec = request.files['recording']
+	print(request.form.to_dict(flat=False)
 
 	#files = os.listdir("./")
 	#file = files["%s.afp" % word]
