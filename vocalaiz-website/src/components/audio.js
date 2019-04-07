@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class Audio extends Component {
   static propTypes = {
-    onStream: PropTypes.func.isRequired,
+    onStreamChunk: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
     onNotSupported: PropTypes.func
   }
@@ -15,11 +15,9 @@ export default class Audio extends Component {
       supported: true
     };
 
-    this.recordStream = this.recordStream.bind(this);
-  }
-
-  componentDidMount () {
-    this.recordStream();
+    this.prepareStream = this.prepareStream.bind(this);
+    this.startRecording = this.startRecording.bind(this);
+    this.streamAudioData = this.streamAudioData.bind(this);
   }
 
   render () {
@@ -30,15 +28,15 @@ export default class Audio extends Component {
     );
   }
 
-  recordStream () {
-    const { onStream, onError, onNotSupported } = this.props;
+  prepareStream () {
+    const { onError, onNotSupported } = this.props;
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia(
         {
           audio: true
         })
-        .then(onStream)
+        .then(this.startRecording)
         .catch(onError);
     } else {
       this.setState({
@@ -48,5 +46,34 @@ export default class Audio extends Component {
         onNotSupported();
       });
     }
+  }
+
+  startRecording (stream, callback) {
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audioContext = new AudioContext();
+    if (!audioContext) {
+      return;
+    }
+
+    // AudioNode used to control the overall gain (or volume) of the audio graph
+
+    console.log(audioContext);
+    const inputPoint = audioContext.createGain();
+    const microphone = audioContext.createMediaStreamSource(stream);
+    const analyser = audioContext.createAnalyser();
+    const scriptProcessor = inputPoint.context.createScriptProcessor(2048, 2, 2);
+
+    microphone.connect(inputPoint);
+    inputPoint.connect(analyser);
+    inputPoint.connect(scriptProcessor);
+    scriptProcessor.connect(inputPoint.context.destination);
+    // This is for registering to the “data” event of audio stream, without overwriting the default scriptProcessor.onAudioProcess function if there is one.
+    scriptProcessor.addEventListener('audioprocess', this.streamAudioData);
+  }
+
+  streamAudioData (e) {
+    const floatSamples = e.inputBuffer.getChannelData(0);
+    this.props.onStreamChunk(floatSamples);
+    // HERE GOES THE CODE TO SEND THE CHUNKED DATA FROM STREAM
   }
 }
