@@ -44,7 +44,7 @@ record
     // Other options, see https://www.npmjs.com/package/node-record-lpcm16#options
     verbose: false,
     recordProgram: 'rec', // Try also "arecord" or "sox"
-    silence: '10.0',
+    silence: '0',
   })
   .on('error', console.error)
   .pipe(recognizeStream);
