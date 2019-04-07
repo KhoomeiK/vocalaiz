@@ -17,7 +17,7 @@ def index():
 
 	# save as wav locally
 	testFile = wave.open('test.wav', 'wb')
-	testFile.setparams((1, 2, 22000, 100, 'NONE', None))
+	testFile.setparams((1, 2, 44100, 100, 'NONE', None))
 	testFile.writeframes(binBase)
 	# send to gcloud api
 	proc = subprocess.Popen(['node', 'gcloudTest.js'], stdout=subprocess.PIPE)
@@ -26,6 +26,7 @@ def index():
 	print(sects)
 	resp = {'data': []}
 	for line in sects:
+		line = str(line)
 		name = line.split(':')[0]
 		start = float(line.split(':')[1].split('-')[0])
 		end = float(line.split(':')[1].split('-')[1])
