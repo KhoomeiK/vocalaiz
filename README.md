@@ -16,13 +16,6 @@ Mobile app using machine learning to help language learners correct their accent
 - Prelim can be audio fingerprinting
 - Could use the Call API to record outside of the app
 
-## Prelim
-
-- Person is speaking
-- App records audio
-- App sends audio to API
-- API returns text of 
-
 ## How works future
 
 - Person says word
@@ -30,6 +23,16 @@ Mobile app using machine learning to help language learners correct their accent
 - Server finds word in database and loads ML model for it
 - Runs audio from POST through ML model
 - Respond with whether pronounced good or bad
+
+## MVP no stream
+
+- App records file
+- App sends file to server
+- Server downloads file and sends to gcloud api
+- Server gets timestamps for each word and splices the file into word files named after STT responses
+- Server passes path to word file to fingerprinter
+- Fingerprinter fingeprints word file and official word file then diffs
+- Server responds JSON with structure {word: diffVal, word2: diffVal2}
 
 ## Links
 
