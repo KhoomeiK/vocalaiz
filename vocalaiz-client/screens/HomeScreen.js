@@ -1,9 +1,10 @@
 import React from 'react';
 import {
   View,
-  StyleSheet,
-  Button
+  StyleSheet
 } from 'react-native';
+
+import AudioRecorder from '../components/AudioRecorder';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,8 +23,8 @@ export default class HomeScreen extends React.Component {
 
   render () {
     return (
-      <View style={[styles.container, styles.contentContainer]}>
-        <Button>Start Recording</Button>
+      <View>
+        <AudioRecorder style={[styles.container, styles.contentContainer]} />
       </View>
     );
   }
