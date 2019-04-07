@@ -2,9 +2,6 @@ from flask import Flask, request
 import os
 import wave
 import base64
-from google.cloud import speech
-from google.cloud.speech import enums
-from google.cloud.speech import types
 import subprocess
 import MatadorHashing
 
@@ -25,9 +22,9 @@ def index():
 	# send to gcloud api
 	proc = subprocess.Popen(['node', 'gcloudTest.js'], stdout=subprocess.PIPE)
 	print(proc.stdout)
-	sects = proc.stdout.split('\n')
+	sects = proc.stdout.readlines()
 	print(sects)
-	resp = {data: []}
+	resp = {'data': []}
 	for line in sects:
 		name = line.split(':')[0]
 		start = float(line.split(':')[1].split('-')[0])
