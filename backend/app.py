@@ -26,12 +26,12 @@ def index():
 	print(sects)
 	resp = {'data': []}
 	for line in sects:
-		line = str(line)
+		line = line.decode('ascii')
 		name = line.split(':')[0]
 		start = float(line.split(':')[1].split('-')[0])
 		end = float(line.split(':')[1].split('-')[1])
 		print('%s %s %s' % (name, start, end))
-		# os.system("ffmpeg -i test.wav -ss %s -to %s -c copy audio/user/%s.wav" % (name, start, end))
+		os.system("ffmpeg -i test.wav -ss %s -to %s -c copy audio/user/%s.wav" % (start, end, name))
 		# num = fingerComparator(name, "audio/user/%s.wav" % name)
 		# resp[data].append([name, num]) 
 	return 'resp'
