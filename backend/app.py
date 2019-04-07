@@ -3,6 +3,7 @@ import os
 import wave
 import base64
 import subprocess
+import random
 from MatadorHashing import fingerprintComparator
 
 app = Flask(__name__)
@@ -31,9 +32,10 @@ def index():
 		start = float(line.split(':')[1].split('-')[0])
 		end = float(line.split(':')[1].split('-')[1])
 		print('%s %s %s' % (name, start, end))
-		os.system("ffmpeg -i test.wav -ss %s -to %s -c copy audio/user/%s.wav" % (start, end, name))
-		num = fingerprintComparator(name, "audio/user/%s.wav" % name)
-		resp[data].append([name, num])
+		# os.system("ffmpeg -i test.wav -ss %s -to %s -c copy audio/user/%s.wav" % (start, end, name))
+		# num = fingerprintComparator(name, "audio/user/%s.wav" % name)
+		# resp[data].append([name, num])
+		resp[data].append([name, random.uniform(0, 1)])
 	return 'resp'
 
 '''
