@@ -5,10 +5,10 @@ import wave
 app = Flask(__name__)
 
 @app.route('/prelim', methods=['POST'])
-def index(word):
+def index():
 	req = request.form.to_dict(flat=False)
 	print(req)
-	base = req.recording
+	base = req['recording'][0]
 
 	# save as wav locally
 	testFile = wave.open('test.wav', 'wb')
