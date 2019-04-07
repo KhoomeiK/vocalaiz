@@ -4,6 +4,7 @@ import subprocess
 
 def fingerprintComparator(word, audio):
      wordList = get_audio_file(word)
+     
      if len(wordList):   
          fileWord = get_audio_file(word)[0]
      else:
