@@ -24,6 +24,16 @@ Mobile app using machine learning to help language learners correct their accent
 - Runs audio from POST through ML model
 - Respond with whether pronounced good or bad
 
+## MVP no stream
+
+- App records file
+- App sends file to server
+- Server downloads file and sends to gcloud api
+- Server gets timestamps for each word and splices the file into word files named after STT responses
+- Server passes path to word file to fingerprinter
+- Fingerprinter fingeprints word file and official word file then diffs
+- Server responds JSON with structure {word: diffVal, word2: diffVal2}
+
 ## Links
 
 - [http://slazebni.cs.illinois.edu/spring17/lec26_audio.pdf](http://slazebni.cs.illinois.edu/spring17/lec26_audio.pdf)
