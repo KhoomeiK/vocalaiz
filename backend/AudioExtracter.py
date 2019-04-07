@@ -7,12 +7,11 @@ import ctypes, sys
 
 AudioSegment.converter = r"C:\FFmpeg\bin"
 
+
 def update_audio(location):
-    temp = AudioSegment.empty()
-    temp += AudioSegment.from_mp3('audio\\' + location + '.mp3')
-    temp += AudioSegment.silent(3800)
-    print(type(temp))
-    temp.export('audio\\' + location + '.mp3', format="mp3")
+    path = r'./audio/' + location + '.mp3'
+    msg = "ffmpeg -i " + path + " -i ./audio/silence.mp3 -filter_complex [0:a][1:a]concat=n=2:v=0:a=1 ./final_audio/" + location + ".mp3"
+    os.system(msg)
 
 
 def get_audio_file(word):
@@ -28,11 +27,9 @@ def get_audio_file(word):
         file.write(audio_content)
         file.close()
         update_audio(location)
-        locations.append(location)
+        final_path = "./final_audio/" + location + ".mp3"
+        locations.append(final_path)
     return locations
-
-
-print(get_audio_file("dog")[0])
 
 
 
