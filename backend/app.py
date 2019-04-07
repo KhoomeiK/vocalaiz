@@ -23,7 +23,7 @@ def index():
 	testFile.setparams((1, 2, 22000, 100, 'NONE', None))
 	testFile.writeframes(binBase)
 	# send to gcloud api
-	proc = subprocess.run(['node', 'gcloudTest.js'], capture_output=True)
+	proc = subprocess.Popen(['node', 'gcloudTest.js'], stdout=subprocess.PIPE)
 	print(proc.stdout)
 	sects = proc.stdout.split('\n')
 	print(sects)
