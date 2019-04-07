@@ -4,7 +4,7 @@ import subprocess
 
 def fingerprintComparator (word, audio):
     
-     fileWord = word #get_audio_file(word)[0]
+     fileWord = get_audio_file(word)[0]
 
      procWord = subprocess.Popen(['fpcalc', '-raw', fileWord],stdout=subprocess.PIPE)
      fileWordData = str(procWord.stdout.readlines()[1]).split('=')[1]
@@ -33,8 +33,4 @@ def fingerprintComparator (word, audio):
      if i != 0:
          avgVal = total/i
          print (1.0 - avgVal)    
-#fingerprintComparator("C:\\Users\\AK\\Documents\\MatadorHacks\\vocalaiz\\backend\\audio\\cap00001.wav", "C:\\Users\\AK\\Documents\\MatadorHacks\\vocalaiz\\backend\\audio\\cat00001.wav" )
-
-# print (acoustid.fingerprint_file("./audio/Hello.wav"))
-# print (acoustid.fingerprint_file("./audio/Hallo.wav"))
 
