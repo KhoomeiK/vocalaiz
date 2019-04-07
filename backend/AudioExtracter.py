@@ -1,8 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
+import os
 from pydub import AudioSegment
-AudioSegment.converter = r"C:\\FFmpeg\\bin\\ffmeg.exe"
-AudioSegment.ffmpeg = r"C:\\FFmpeg\\bin\\ffmeg.exe"
+from glob import glob
+import ctypes, sys
+
+AudioSegment.converter = r"C:\FFmpeg\bin"
 
 def get_audio_file(word):
     locations = []
@@ -17,12 +20,15 @@ def get_audio_file(word):
         file.write(audio_content)
         file.close()
         temp = AudioSegment.empty()
-        temp += AudioSegment.from_mp3("./audio/tree0001.mp3")
+        temp += AudioSegment.from_mp3('audio\\' + location + '.mp3')
         temp += AudioSegment.silent()
+        print(type(temp))
+        temp.export(location + '.mp3', format="mp3")
         locations.append(path)
-    return locations
+    return locations    
 
-get_audio_file("tree")
+get_audio_file("mouse")
+
 
 
 
