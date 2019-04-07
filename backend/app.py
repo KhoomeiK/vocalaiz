@@ -3,7 +3,7 @@ import os
 import wave
 import base64
 import subprocess
-import MatadorHashing
+from MatadorHashing import fingerprintComparator
 
 app = Flask(__name__)
 
