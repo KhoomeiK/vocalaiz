@@ -3,9 +3,8 @@ from AudioExtracter import get_audio_file
 import subprocess
 
 def fingerprintComparator(word, audio):
-     
+     wordList = get_audio_file(word)
      if len(wordList):   
-         wordList = get_audio_file(word)
          fileWord = get_audio_file(word)[0]
      else:
          return
