@@ -3,12 +3,14 @@ import React from 'react';
 import {
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 
 import { Audio, Permissions } from 'expo';
 
 import RoundIconButton from './RoundIconButton';
+import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -55,10 +57,11 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <RoundIconButton
-          icon={isLoading ? 'md-sync' : 'md-mic'}
-          style={{ backgroundColor: isRecording ? 'red' : 'blue' }}
+          icon={isLoading ? `${Platform.OS === 'ios' ? 'ios' : 'md'}-sync` : `${Platform.OS === 'ios' ? 'ios' : 'md'}-mic`}
+          style={{ backgroundColor: isRecording ? Colors.errorColor : Colors.tintColor }}
           onPress={this._handlePressRecordButton}
-          iconSize={64}
+          pressedColor={isRecording ? Colors.darkErrorColor : Colors.darkTintColor}
+          iconSize={72}
           buttonSize={128}
         />
         <Text style={styles.infoText}>{isRecording ? 'Recording...' : (isLoading ? 'Loading...' : 'Ready to record.')}</Text>
@@ -143,12 +146,7 @@ export default class HomeScreen extends React.Component {
 
     console.log(formData);
 
-    if (data) {
-      console.log('TODO FILL IN THE SERVER_URL');
-      return;
-    }
-
-    return fetch('SERVER URL', {
+    return fetch('http://35.233.183.157/prelim', {
       method: 'POST',
       body: formData,
       header: {
