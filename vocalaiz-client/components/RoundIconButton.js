@@ -7,12 +7,12 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 
-import { tintColor, darkTintColor } from '../constants/Colors';
+import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: tintColor,
+    backgroundColor: Colors.tintColor,
     borderRadius: 100000,
     justifyContent: 'center'
   },
@@ -45,7 +45,7 @@ export default class RoundIconButton extends React.Component {
             }
           ]}
           onPress={this.props.onPress}
-          underlayColor={this.props.pressedColor || darkTintColor}
+          underlayColor={this.props.pressedColor || Colors.darkTintColor}
         >
           <Ionicons
             style={styles.icon}
