@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/speech": "^2.3.1",
     "audioconcat": "^0.1.3"
   }
 }

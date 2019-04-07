@@ -2,8 +2,7 @@ import acoustid
 from AudioExtracter import get_audio_file
 import subprocess
 
-def fingerprintComparator (word, audio):
-    
+def fingerprintComparator(word, audio):
      fileWord = get_audio_file(word)[0]
 
      procWord = subprocess.Popen(['fpcalc', '-raw', fileWord],stdout=subprocess.PIPE)
@@ -33,4 +32,4 @@ def fingerprintComparator (word, audio):
      if i != 0:
          avgVal = total/i
          print (1.0 - avgVal)    
-
+         return 1.0 - avgVal

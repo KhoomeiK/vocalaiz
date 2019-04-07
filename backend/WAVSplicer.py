@@ -19,4 +19,4 @@
 #     chunk.export(chunk_name, format="wav")
 import os
 #os.system("ffmpeg -i LongWord.wav -ss 2.3 -to 7.9 -c copy ShortWord.wav")
-os.system("ffmpeg -i LongWord.wav -ss 2 -to 8 -c copy ShorterWord.wav")
+os.system("ffmpeg -i LongWord.wav -ss 2 -to 8 -c copy ShorterWord.wav" % (name))
