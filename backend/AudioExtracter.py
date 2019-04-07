@@ -21,14 +21,15 @@ def get_audio_file(word):
     audio_locations = soup.find_all('a', class_="play-pron hw-play-pron")
     for location_item in audio_locations:
         location = location_item["data-file"]   
-        audio_content = requests.get("https://media.merriam-webster.com/audio/prons/en/us/mp3/" + location[0] + "/" + location + ".mp3").content
-        path = "./audio/" + location + ".mp3"
-        file = open(path, "wb")
-        file.write(audio_content)
-        file.close()
-        update_audio(location)
-        final_path = "./final_audio/" + location + ".mp3"
-        locations.append(final_path)
+        if "./final_audio/" + location + ".mp3" not in locations:
+            audio_content = requests.get("https://media.merriam-webster.com/audio/prons/en/us/mp3/" + location[0] + "/" + location + ".mp3").content
+            path = "./audio/" + location + ".mp3"
+            file = open(path, "wb")
+            file.write(audio_content)
+            file.close()
+            update_audio(location)
+            final_path = "./final_audio/" + location + ".mp3"
+            locations.append(final_path)
     return locations
 
 
