@@ -28,12 +28,12 @@ def fingerprintComparator (word, audio):
                  break
      if i != 0:
          avgVal = total/i
-         print (avgVal)    
+         print (1.0 - avgVal)    
     #  print("word values")
     #  for wordVal in fileWordVals:
     #      wordVal = int(wordVal.split('\\')[0])
     #      print(wordVal)
-fingerprintComparator("cat", "C:\\Users\\AK\\Documents\\MatadorHacks\\vocalaiz\\backend\\audio\\cap00001.mp3" )
+#fingerprintComparator("pneumonoultramicroscopicsilicovolcanoconiosis", "C:\\Users\\AK\\Documents\\MatadorHacks\\vocalaiz\\backend\\audio\\LongWord.wav" )
 
 # print (acoustid.fingerprint_file("./audio/Hello.wav"))
 # print (acoustid.fingerprint_file("./audio/Hallo.wav"))
