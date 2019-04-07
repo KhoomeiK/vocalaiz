@@ -45,11 +45,11 @@ export default class HomeScreen extends React.Component {
     const { hasPermissions, isRecording, isLoading, error } = this.state;
 
     if (!hasPermissions) {
-      return <View><Text>Please enable microphone permissions.</Text></View>;
+      return <View style={styles.container}><Text style={styles.infoText}>Please enable microphone permissions.</Text></View>;
     }
 
     if (error) {
-      return <View><Text>Error while recording: {error}</Text></View>;
+      return <View style={styles.container}><Text style={styles.infoText}>Error while recording: {error}</Text></View>;
     }
 
     return (
@@ -124,7 +124,7 @@ export default class HomeScreen extends React.Component {
         });
         console.log('Stopped recording.');
 
-        this._uploadAudio(this.recording.getURI());
+        await this._uploadAudio(this.recording.getURI());
       } catch (error) {
         this.setState({
           error
@@ -135,22 +135,17 @@ export default class HomeScreen extends React.Component {
 
   _uploadAudio = async (fileUri) => {
     const data = await fetch(fileUri);
+    const blob = await data.blob();
 
-    // ImagePicker saves the taken photo to disk and returns a local URI to it
-    let localUri = fileUri;
-    let filename = localUri.split('/').pop();
-
-    // Infer the type of the image
-    let match = /\.(\w+)$/.exec(filename);
-    let type = match ? `image/${match[1]}` : `image`;
-
-    // Upload the image using the fetch and FormData APIs
+    // Upload the recordings using the fetch and FormData APIs
     let formData = new FormData();
-    // Assume "photo" is the name of the form field the server expects
-    formData.append('photo', { uri: localUri, name: filename, type });
+    formData.append('recording', blob);
+
+    console.log(formData);
 
     if (data) {
-      return 'TODO FILL IN THE SERVER_URL';
+      console.log('TODO FILL IN THE SERVER_URL');
+      return;
     }
 
     return fetch('SERVER URL', {
