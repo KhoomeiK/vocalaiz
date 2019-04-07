@@ -5,7 +5,7 @@ from pydub import AudioSegment
 from glob import glob
 import ctypes, sys
 
-AudioSegment.converter = r"C:\FFmpeg\bin"
+AudioSegment.converter = r"C:\\Users\\AK\Desktop\\ffmpeg-20190407-8607e29-win64-static\\bin"
 
 
 def update_audio(location):
