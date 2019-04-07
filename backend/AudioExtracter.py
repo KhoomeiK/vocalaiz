@@ -3,6 +3,7 @@ import requests
 
 
 def get_audio_file(word):
+    locations = []
     result = requests.get("https://www.merriam-webster.com/dictionary/" + word).text
     soup = BeautifulSoup(result, 'lxml')
     audio_locations = soup.find_all('a', class_="play-pron hw-play-pron")
@@ -12,6 +13,8 @@ def get_audio_file(word):
         file = open("./audio/" + location + ".mp3", "wb")
         file.write(audio_content)
         file.close()
+        locations.append("./audio/" + location + ".mp3")
+    return locations
 
 
 
