@@ -3,9 +3,12 @@ import os
 
 app = Flask(__name__)
 
-@app.route('/prelim/<word>')
+@app.route('/prelim', methods=['POST'])
 def index(word):
-	files = os.listdir("./")
-	file = files["%s.afp" % word]
-	
+	print(request)
+	print(request.files)
+	rec = request.files['recording']
+
+	#files = os.listdir("./")
+	#file = files["%s.afp" % word]
 	return True
