@@ -16,13 +16,6 @@ Mobile app using machine learning to help language learners correct their accent
 - Prelim can be audio fingerprinting
 - Could use the Call API to record outside of the app
 
-## Prelim
-
-- Person is speaking
-- App records audio
-- App sends audio to API
-- API returns text of 
-
 ## How works future
 
 - Person says word
