@@ -1,4 +1,3 @@
-import
 def parser(row):
     # function to load files and extract features
     file_name = os.path.join(os.path.abspath(data_dir), 'Train', str(row.ID) + '.wav')
