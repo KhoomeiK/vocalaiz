@@ -1,5 +1,17 @@
 from bs4 import BeautifulSoup
 import requests
+import os
+from pydub import AudioSegment
+from glob import glob
+import ctypes, sys
+
+AudioSegment.converter = r"C:\FFmpeg\bin"
+
+def update_audio(location):
+    temp += AudioSegment.from_mp3('audio\\' + location + '.mp3')
+    temp += AudioSegment.silent(3800)
+    print(type(temp))
+    temp.export('audio\\' + location + '.mp3', format="mp3")
 
 
 def get_audio_file(word):
@@ -10,8 +22,17 @@ def get_audio_file(word):
     for location_item in audio_locations:
         location = location_item["data-file"]
         audio_content = requests.get("https://media.merriam-webster.com/audio/prons/en/us/mp3/" + location[0] + "/" + location + ".mp3").content
-        file = open("./audio/" + location + ".mp3", "wb")
+        path = "./audio/" + location + ".mp3"
+        file = open(path, "wb")
         file.write(audio_content)
         file.close()
-        locations.append("./audio/" + location + ".mp3")
+        update_audio(location)
+        locations.append(location)
     return locations
+
+
+print(get_audio_file("dog")[0])
+
+
+
+

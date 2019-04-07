@@ -3,7 +3,7 @@ from AudioExtracter import get_audio_file
 import subprocess
 
 def fingerprintComparator (word, audio):
-     fileWord = get_audio_file(word)[0]
+     fileWord = word #get_audio_file(word)[0]
 
     #  fingerprintWord = acoustid.fingerprint_file(fileWord)
     #  fingerprintAudio = acoustid.fingerprint_file(audio)
@@ -29,11 +29,7 @@ def fingerprintComparator (word, audio):
      if i != 0:
          avgVal = total/i
          print (1.0 - avgVal)    
-    #  print("word values")
-    #  for wordVal in fileWordVals:
-    #      wordVal = int(wordVal.split('\\')[0])
-    #      print(wordVal)
-#fingerprintComparator("pneumonoultramicroscopicsilicovolcanoconiosis", "C:\\Users\\AK\\Documents\\MatadorHacks\\vocalaiz\\backend\\audio\\LongWord.wav" )
+fingerprintComparator("C:\\Users\\AK\\Documents\\MatadorHacks\\vocalaiz\\backend\\audio\\cap00001.wav", "C:\\Users\\AK\\Documents\\MatadorHacks\\vocalaiz\\backend\\audio\\cat00001.wav" )
 
 # print (acoustid.fingerprint_file("./audio/Hello.wav"))
 # print (acoustid.fingerprint_file("./audio/Hallo.wav"))
