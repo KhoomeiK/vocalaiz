@@ -1,6 +1,7 @@
 from flask import Flask, request
 import os
 import wave
+import base64
 
 app = Flask(__name__)
 
@@ -9,7 +10,7 @@ def index():
 	req = request.form.to_dict(flat=False)
 	print(req)
 	base = req['recording'][0] # must convert this to bytes
-	binBase = b'%s' % base
+	binBase = base64.b64decode(base)
 	print(binBase)
 
 	# save as wav locally
