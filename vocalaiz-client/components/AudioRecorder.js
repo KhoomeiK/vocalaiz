@@ -4,13 +4,15 @@ import {
   View,
   Text,
   StyleSheet,
-  Platform
+  Platform,
+  Button
 } from 'react-native';
 
-import { Audio, Permissions } from 'expo';
+import { FileSystem, Audio, Permissions } from 'expo';
 
 import RoundIconButton from './RoundIconButton';
 import Colors from '../constants/Colors';
+import WordList from './WordList';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,10 +25,14 @@ const styles = StyleSheet.create({
   infoText: {
     marginTop: 15,
     fontSize: 18
+  },
+  top: {
+    marginTop: 25,
+    marginBottom: 25
   }
 });
 
-export default class HomeScreen extends React.Component {
+export default class AudioRecorder extends React.Component {
   constructor (props) {
     super(props);
 
@@ -35,7 +41,8 @@ export default class HomeScreen extends React.Component {
       hasPermissions: false,
       isRecording: false,
       isLoading: false,
-      error: undefined
+      error: undefined,
+      resultData: undefined
     };
   }
 
@@ -44,27 +51,35 @@ export default class HomeScreen extends React.Component {
   }
 
   render () {
-    const { hasPermissions, isRecording, isLoading, error } = this.state;
+    const { hasPermissions, isRecording, isLoading, error, resultData } = this.state;
 
     if (!hasPermissions) {
       return <View style={styles.container}><Text style={styles.infoText}>Please enable microphone permissions.</Text></View>;
     }
 
     if (error) {
-      return <View style={styles.container}><Text style={styles.infoText}>Error while recording: {error}</Text></View>;
+      return (
+        <View style={styles.container}>
+          <Text style={styles.infoText}>Error while recording: {error.message}</Text>
+          <Button title='Clear Error' onPress={() => this.setState({ error: undefined })} />
+        </View>
+      );
     }
 
     return (
       <View style={styles.container}>
-        <RoundIconButton
-          icon={isLoading ? `${Platform.OS === 'ios' ? 'ios' : 'md'}-sync` : `${Platform.OS === 'ios' ? 'ios' : 'md'}-mic`}
-          style={{ backgroundColor: isRecording ? Colors.errorColor : Colors.tintColor }}
-          onPress={this._handlePressRecordButton}
-          pressedColor={isRecording ? Colors.darkErrorColor : Colors.darkTintColor}
-          iconSize={72}
-          buttonSize={128}
-        />
-        <Text style={styles.infoText}>{isRecording ? 'Recording...' : (isLoading ? 'Loading...' : 'Ready to record.')}</Text>
+        <View style={styles.top}>
+          <RoundIconButton
+            icon={isLoading ? `${Platform.OS === 'ios' ? 'ios' : 'md'}-sync` : `${Platform.OS === 'ios' ? 'ios' : 'md'}-mic`}
+            style={{ backgroundColor: isRecording ? Colors.errorColor : Colors.tintColor }}
+            onPress={this._handlePressRecordButton}
+            pressedColor={isRecording ? Colors.darkErrorColor : Colors.darkTintColor}
+            iconSize={72}
+            buttonSize={128}
+          />
+          <Text style={styles.infoText}>{isRecording ? 'Recording...' : (isLoading ? 'Loading...' : 'Ready to record.')}</Text>
+        </View>
+        <WordList data={resultData} />
       </View>
     );
   }
@@ -100,7 +115,7 @@ export default class HomeScreen extends React.Component {
         interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
         playThroughEarpieceAndroid: false
       });
-      await this.recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+      await this.recording.prepareToRecordAsync({ ...Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY, extension: '.wav' });
       await this.recording.startAsync();
       this.setState({
         isRecording: true,
@@ -137,21 +152,24 @@ export default class HomeScreen extends React.Component {
   }
 
   _uploadAudio = async (fileUri) => {
-    const data = await fetch(fileUri);
-    const blob = await data.blob();
+    const file = await FileSystem.readAsStringAsync(fileUri, { encoding: FileSystem.EncodingTypes.Base64 });
 
     // Upload the recordings using the fetch and FormData APIs
     let formData = new FormData();
-    formData.append('recording', blob);
+    formData.append('recording', file);
 
-    console.log(formData);
-
-    return fetch('http://35.233.183.157/prelim', {
+    const res = await fetch('http://35.233.183.157/prelim', {
       method: 'POST',
       body: formData,
       header: {
         'content-type': 'multipart/form-data'
       }
+    });
+
+    this.setState({
+      // Get the output data
+      // TODO: Rohan might have formatted this differentyl
+      resultData: res.body
     });
   }
 }
