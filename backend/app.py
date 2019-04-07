@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import os
 import wave
 import base64
@@ -34,9 +34,9 @@ def index():
 		print('%s %s %s' % (name, start, end))
 		# os.system("ffmpeg -i test.wav -ss %s -to %s -c copy audio/user/%s.wav" % (start, end, name))
 		# num = fingerprintComparator(name, "audio/user/%s.wav" % name)
-		# resp[data].append([name, num])
-		resp[data].append([name, random.uniform(0, 1)])
-	return 'resp'
+		# resp['data'].append([name, num])
+		resp['data'].append([name, random.uniform(0, 1)])
+	return jsonify(resp)
 
 '''
 {[
