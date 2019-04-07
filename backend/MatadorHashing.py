@@ -1,0 +1,29 @@
+import acoustid
+from AudioExtracter import get_audio_file
+import subprocess
+
+def fingerprintComparator (word, audio):
+     fileWord = get_audio_file(word)[0]
+
+    #  fingerprintWord = acoustid.fingerprint_file(fileWord)
+    #  fingerprintAudio = acoustid.fingerprint_file(audio)
+     procWord = subprocess.Popen(['fpcalc', '-raw', fileWord],stdout=subprocess.PIPE)
+     fileWordData = str(procWord.stdout.readlines()[1]).split('=')[1]
+     fileWordVals = fileWordData.split(',')
+
+     procAudio = subprocess.Popen(['fpcalc', '-raw', audio],stdout=subprocess.PIPE)
+     audioData = str(procAudio.stdout.readlines()[1]).split('=')[1]
+     audioVals = audioData.split(',')
+
+     for audioVal in audioVals:
+         audioVal = int(audioVal.split('\\')[0])
+         print(audioVal)
+     print("word values")
+     for wordVal in fileWordVals:
+         wordVal = int(wordVal.split('\\')[0])
+         print(wordVal)
+fingerprintComparator("pneumonoultramicroscopicsilicovolcanoconiosis", "C:\\Users\\AK\\Documents\\MatadorHacks\\vocalaiz\\backend\\audio\\LongWord.wav" )
+
+# print (acoustid.fingerprint_file("./audio/Hello.wav"))
+# print (acoustid.fingerprint_file("./audio/Hallo.wav"))
+
